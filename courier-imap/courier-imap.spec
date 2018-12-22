@@ -24,11 +24,11 @@
 
 Summary: Courier IMAP server
 Name: courier-imap
-Version: 4.18.2
+Version: 5.0.5
 Release: 1%{?dist}%{courier_release}
 License: GPLv3
 Group: Applications/Mail
-Source: http://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
+Source: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires: fileutils textutils sh-utils sed
 %if %suse_version
