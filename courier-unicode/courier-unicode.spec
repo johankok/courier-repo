@@ -1,11 +1,11 @@
 Summary: Courier Unicode Library
 Name: courier-unicode
-Version: 2.0
+Version: 2.1
 Release: 1%{?dist}%{?courier_release}
 License: GPLv3
 Group: System Environment/Libraries
 URL: http://www.courier-mta.org/unicode/
-Source: http://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
+Source: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: perl-generators
 
