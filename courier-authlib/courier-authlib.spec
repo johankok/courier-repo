@@ -14,7 +14,7 @@
 ################################################################################
 
 Name:           courier-authlib
-Version:        0.68.0
+Version:        0.69.0
 Release:        1%{?dist}%{?courier_release}
 Summary:        Courier authentication library
 
