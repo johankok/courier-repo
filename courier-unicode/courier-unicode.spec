@@ -8,6 +8,7 @@ URL: http://www.courier-mta.org/unicode/
 Source: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: perl-generators
+BuildRequires: gcc-c++
 
 %package devel
 Summary: Courier Unicode Library development files
