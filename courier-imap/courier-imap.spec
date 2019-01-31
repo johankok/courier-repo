@@ -5,13 +5,6 @@
 #  Need to version-upgrade RH builds due to different directory locations.
 #
 
-# No dist tag from mock; detect mandrake, redhat, etc. the old fashioned way
-%if 0%{!?dist:1}
-%define courier_release %(test -e /etc/mandrake-release -o -e /etc/mandriva-release && release="mdk" ; if test $? != 0; then release="`rpm -q --queryformat='.rh%{VERSION}' redhat-release 2>/dev/null`" ; if test $? != 0 ; then release="`rpm -q --queryformat='.fc%{VERSION}' fedora-release 2>/dev/null`" ; if test $? != 0 ; then release="" ; fi ; fi ; fi ; echo "$release")
-%else
-%define courier_release %{nil}
-%endif
-
 %define using_systemd %(test -d /etc/systemd && echo 1 || echo 0)
 
 %define _missing_doc_files_terminate_build 1
@@ -20,7 +13,7 @@
 Summary: Courier IMAP server
 Name: courier-imap
 Version: 5.0.6
-Release: 1%{?dist}%{courier_release}
+Release: 1%{?dist}
 License: GPLv3
 Group: Applications/Mail
 Source: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2

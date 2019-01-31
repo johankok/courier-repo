@@ -1,7 +1,7 @@
 Summary: Courier Unicode Library
 Name: courier-unicode
 Version: 2.1
-Release: 1%{?dist}%{?courier_release}
+Release: 1%{?dist}
 License: GPLv3
 Group: System Environment/Libraries
 URL: http://www.courier-mta.org/unicode/

@@ -2,17 +2,10 @@
 # Copyright 1998 - 2010 Double Precision, Inc.  See COPYING for
 # distribution information.
 
-# No dist tag from mock; detect mandrake, redhat, etc. the old fashioned way
-%if 0%{!?dist:1}
-%define courier_release %(test -e /etc/mandrake-release -o -e /etc/mandriva-release && release="mdk" ; if test $? != 0; then release="`rpm -q --queryformat='.rh%{VERSION}' redhat-release 2>/dev/null`" ; if test $? != 0 ; then release="`rpm -q --queryformat='.fc%{VERSION}' fedora-release 2>/dev/null`" ; if test $? != 0 ; then release="" ; fi ; fi ; fi ; echo "$release")
-%else
-%define courier_release %{nil}
-%endif
-
 Summary: Maildrop mail filter/mail delivery agent
 Name: maildrop
 Version: 3.0.0
-Release: 1%{?dist}%{?courier_release}
+Release: 1%{?dist}
 License: GPLv3
 Group: Applications/Internet
 Source: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
