@@ -84,6 +84,7 @@ full Courier mail server.  Install the Courier package instead.
 
 PATH=/usr/bin:$PATH %configure \
   --with-redhat \
+  --with-notice=unicode \
   %{?xflags: %{xflags}}
 
 %build
