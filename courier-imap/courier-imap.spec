@@ -33,7 +33,7 @@ Requires(preun):  systemd
 %endif
 Requires: courier-authlib >= 0.60.6.20080629
 BuildRequires: /usr/bin/ps
-BuildRequires: textutils fileutils perl
+BuildRequires: coreutils perl
 BuildRequires: courier-authlib-devel >= 0.60.6.20080629
 BuildRequires: libidn-devel
 BuildRequires: courier-unicode-devel
