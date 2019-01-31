@@ -25,7 +25,7 @@ License: GPLv3
 Group: Applications/Mail
 Source: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Requires: fileutils textutils sh-utils sed
+Requires: coreutils sed
 %if %using_systemd
 Requires(post):   systemd
 Requires(postun):   systemd
