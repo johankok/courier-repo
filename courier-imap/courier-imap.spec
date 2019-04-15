@@ -12,7 +12,7 @@
 
 Summary: Courier IMAP server
 Name: courier-imap
-Version: 5.0.6
+Version: 5.0.7
 Release: 1%{?dist}
 License: GPLv3
 Group: Applications/Mail
