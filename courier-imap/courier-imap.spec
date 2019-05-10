@@ -7,9 +7,6 @@
 
 %define using_systemd %(test -d /etc/systemd && echo 1 || echo 0)
 
-%define _missing_doc_files_terminate_build 1
-%define _unpackaged_files_terminate_build 1
-
 Summary: Courier IMAP server
 Name: courier-imap
 Version: 5.0.7
@@ -30,15 +27,8 @@ BuildRequires: libidn-devel
 BuildRequires: courier-unicode-devel
 BuildRequires: gdbm-devel
 
-%define use_openssl %(rpm -q openssl-devel >/dev/null 2>&1 && echo 1 && exit 0; echo 0)
-
-%if %use_openssl
 BuildRequires:      openssl
 BuildRequires:      openssl-devel
-%else
-BuildRequires:      libgcrypt-devel gnutls-devel /usr/bin/certtool
-Requires:	  /usr/bin/certtool
-%endif
 
 %define need_perl_generators %(if rpm -q fedora-release >/dev/null 2>/dev/null; then echo "1"; exit 0; fi; echo "1"; exit 1)
 
