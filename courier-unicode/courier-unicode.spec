@@ -32,7 +32,6 @@ unicode library.
 %{__make} -s %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
 %post -p /sbin/ldconfig
