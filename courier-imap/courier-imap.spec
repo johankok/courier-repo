@@ -15,9 +15,7 @@ Name: courier-imap
 Version: 5.0.7
 Release: 1%{?dist}
 License: GPLv3
-Group: Applications/Mail
 Source: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires: coreutils sed
 %if %using_systemd
 Requires(post):   systemd
@@ -92,8 +90,6 @@ PATH=/usr/bin:$PATH %configure \
 %{__make} check
 
 %install
-
-%{__rm} -rf $RPM_BUILD_ROOT
 %{__mkdir_p} $RPM_BUILD_ROOT%{pamconfdir}
 %{__mkdir_p} $RPM_BUILD_ROOT%{initdir}
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
@@ -335,6 +331,3 @@ fi
 %ghost %attr(600, root, root) %{_localstatedir}/pop3d-ssl.pid
 %ghost %attr(600, root, root) %{_localstatedir}/pop3d.pid.lock
 %ghost %attr(600, root, root) %{_localstatedir}/pop3d-ssl.pid.lock
-
-%clean
-rm -rf $RPM_BUILD_ROOT
