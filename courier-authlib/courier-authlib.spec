@@ -11,15 +11,12 @@ Version:        0.69.0
 Release:        1%{?dist}
 Summary:        Courier authentication library
 
-Group:          System Environment/Daemons
 License:        GPLv3
 URL:            http://www.courier-mta.org
 
 ################################################################################
 
 Source:         https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
-
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 ################################################################################
 
@@ -66,7 +63,6 @@ other Courier applications.
 
 %package devel
 Summary:    Development libraries for the Courier authentication library
-Group:      Development/Libraries
 Requires:   courier-authlib = 0:%{version}-%{release}
 
 %description devel
@@ -81,7 +77,6 @@ are not needed at runtime.
 %package userdb
 
 Summary:    Userdb support for the Courier authentication library
-Group:      System Environment/Daemons
 Requires:   courier-authlib = 0:%{version}-%{release}
 
 %description userdb
@@ -95,7 +90,6 @@ Install this package in order to be able to authenticate with userdb.
 %package ldap
 
 Summary:    LDAP support for the Courier authentication library
-Group:      System Environment/Daemons
 Requires:   courier-authlib = 0:%{version}-%{release}
 
 %description ldap
@@ -107,7 +101,6 @@ Install this package in order to be able to authenticate using LDAP.
 %package mysql
 
 Summary:    MySQL support for the Courier authentication library
-Group:      System Environment/Daemons
 Requires:   courier-authlib = 0:%{version}-%{release}
 
 %description mysql
@@ -117,7 +110,6 @@ Install this package in order to be able to authenticate using MySQL.
 %package sqlite
 
 Summary:    SQLite support for the Courier authentication library
-Group:      System Environment/Daemons
 Requires:   courier-authlib = 0:%{version}-%{release}
 
 %description sqlite
@@ -130,7 +122,6 @@ database file.
 %package pgsql
 
 Summary:    PostgreSQL support for the Courier authentication library
-Group:      System Environment/Daemons
 Requires:   courier-authlib = 0:%{version}-%{release}
 
 %description pgsql
@@ -143,7 +134,6 @@ Install this package in order to be able to authenticate using PostgreSQL.
 %package pipe
 
 Summary:    External authentication module that communicates via pipes
-Group:      System Environment/Daemons
 Requires:   courier-authlib = 0:%{version}-%{release}
 
 %description pipe
@@ -161,7 +151,6 @@ PATH=/usr/bin:$PATH %configure -C --with-redhat
 %{__make} -s %{_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 MAKEFLAGS= %{__make} -j 1 install DESTDIR=$RPM_BUILD_ROOT
 %{__rm} -f $RPM_BUILD_ROOT%{_libdir}/courier-authlib/*.a
 %{__install} -m 555 sysconftool $RPM_BUILD_ROOT%{_libexecdir}/courier-authlib
@@ -303,9 +292,6 @@ then
 fi
 %systemd_postun_with_restart courier-authlib.service
 %endif
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 
 %files -f configfiles.base
