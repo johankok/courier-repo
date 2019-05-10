@@ -3,16 +3,13 @@ Name: courier-unicode
 Version: 2.1
 Release: 1%{?dist}
 License: GPLv3
-Group: System Environment/Libraries
 URL: http://www.courier-mta.org/unicode/
 Source: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires: perl-generators
 BuildRequires: gcc-c++
 
 %package devel
 Summary: Courier Unicode Library development files
-Group: Development/Libraries
 Requires: %{name} = 0:%{version}-%{release}
 
 %description
@@ -40,9 +37,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 
 %files
