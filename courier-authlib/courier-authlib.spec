@@ -62,8 +62,8 @@ other Courier applications.
 ################################################################################
 
 %package devel
-Summary:    Development libraries for the Courier authentication library
-Requires:   courier-authlib = 0:%{version}-%{release}
+Summary:  Development libraries for the Courier authentication library
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
 This package contains the development libraries and files needed to compile
@@ -76,8 +76,8 @@ are not needed at runtime.
 
 %package userdb
 
-Summary:    Userdb support for the Courier authentication library
-Requires:   courier-authlib = 0:%{version}-%{release}
+Summary:  Userdb support for the Courier authentication library
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description userdb
 This package installs the userdb support for the Courier authentication
@@ -89,8 +89,8 @@ Install this package in order to be able to authenticate with userdb.
 
 %package ldap
 
-Summary:    LDAP support for the Courier authentication library
-Requires:   courier-authlib = 0:%{version}-%{release}
+Summary:  LDAP support for the Courier authentication library
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description ldap
 This package installs LDAP support for the Courier authentication library.
@@ -100,8 +100,8 @@ Install this package in order to be able to authenticate using LDAP.
 
 %package mysql
 
-Summary:    MySQL support for the Courier authentication library
-Requires:   courier-authlib = 0:%{version}-%{release}
+Summary:  MySQL support for the Courier authentication library
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description mysql
 This package installs MySQL support for the Courier authentication library.
@@ -109,8 +109,8 @@ Install this package in order to be able to authenticate using MySQL.
 
 %package sqlite
 
-Summary:    SQLite support for the Courier authentication library
-Requires:   courier-authlib = 0:%{version}-%{release}
+Summary:  SQLite support for the Courier authentication library
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description sqlite
 This package installs SQLite support for the Courier authentication library.
@@ -121,8 +121,8 @@ database file.
 
 %package pgsql
 
-Summary:    PostgreSQL support for the Courier authentication library
-Requires:   courier-authlib = 0:%{version}-%{release}
+Summary:  PostgreSQL support for the Courier authentication library
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description pgsql
 This package installs PostgreSQL support for the Courier authentication
@@ -133,8 +133,8 @@ Install this package in order to be able to authenticate using PostgreSQL.
 
 %package pipe
 
-Summary:    External authentication module that communicates via pipes
-Requires:   courier-authlib = 0:%{version}-%{release}
+Summary:  External authentication module that communicates via pipes
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description pipe
 This package installs the authpipe module, which is a generic plugin
