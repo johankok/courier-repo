@@ -28,15 +28,9 @@ BuildRequires:      gdbm-devel
 BuildRequires:      pam-devel
 BuildRequires:      expect
 BuildRequires:      gcc-c++
-BuildRequires:	    redhat-rpm-config
 BuildRequires:      courier-unicode-devel
 
 BuildRequires:      %{_includedir}/ltdl.h
-
-%if 0%(rpm -q redhat-release >/dev/null 2>&1 || rpm -q fedora-release >/dev/null 2>&1 || exit 0; echo "1")
-BuildRequires:      redhat-rpm-config
-BuildRequires:      /usr/bin/ps
-%endif
 
 %if %using_systemd
 Requires(post):     systemd
