@@ -29,6 +29,7 @@ BuildRequires:      pam-devel
 BuildRequires:      expect
 BuildRequires:      gcc-c++
 BuildRequires:      courier-unicode-devel
+BuildRequires:      procps
 
 BuildRequires:      %{_includedir}/ltdl.h
 
