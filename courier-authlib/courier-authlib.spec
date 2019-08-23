@@ -42,11 +42,7 @@ Requires(post):     /sbin/chkconfig
 Requires(preun):    /sbin/chkconfig
 %endif
 
-%define need_perl_generators %(if rpm -q fedora-release >/dev/null 2>/dev/null; then echo "1"; exit 0; fi; echo "1"; exit 1)
-
-%if %need_perl_generators
 BuildRequires: perl-generators
-%endif
 
 ################################################################################
 

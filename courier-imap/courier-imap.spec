@@ -20,7 +20,7 @@ Requires(postun):   systemd
 Requires(preun):  systemd
 %endif
 Requires: courier-authlib >= 0.60.6.20080629
-BuildRequires: /usr/bin/ps
+BuildRequires: procps
 BuildRequires: coreutils perl
 BuildRequires: courier-authlib-devel >= 0.60.6.20080629
 BuildRequires: libidn-devel
@@ -30,11 +30,7 @@ BuildRequires: gdbm-devel
 BuildRequires:      openssl
 BuildRequires:      openssl-devel
 
-%define need_perl_generators %(if rpm -q fedora-release >/dev/null 2>/dev/null; then echo "1"; exit 0; fi; echo "1"; exit 1)
-
-%if %need_perl_generators
 BuildRequires: perl-generators
-%endif
 
 Obsoletes: %{name}-ldap
 Obsoletes: %{name}-mysql
