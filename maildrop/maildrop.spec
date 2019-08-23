@@ -10,7 +10,7 @@ License: GPLv3
 Group: Applications/Internet
 Source: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
 Url: http://www.courier-mta.org/maildrop/
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
+
 BuildRequires: /usr/include/fam.h gdbm-devel pcre-devel
 BuildRequires: libidn-devel
 BuildRequires: courier-unicode-devel
