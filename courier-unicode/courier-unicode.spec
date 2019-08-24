@@ -8,10 +8,6 @@ Source: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
 BuildRequires: perl-generators
 BuildRequires: gcc-c++
 
-%package devel
-Summary: Courier Unicode Library development files
-Requires: %{name} = 0:%{version}-%{release}
-
 %description
 This library implements several algorithms related to the Unicode
 Standard.
@@ -20,6 +16,10 @@ This package installs only the run-time libraries needed by applications that
 use this library. Install the "courier-unicode-devel" package if you want
 to develop new applications using this library.
 
+%package devel
+Summary: Courier Unicode Library development files
+Requires: %{name}%{?_isa} = %{version}-%{release}
+
 %description devel
 This package contains development files for the Courier Unicode Library.
 Install this package if you want to develop applications that uses this
@@ -27,12 +27,16 @@ unicode library.
 
 %prep
 %setup -q
-%configure
+
 %build
+%configure --disable-static
 %{__make} -s %{?_smp_mflags}
 
 %install
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall
+
+%check
+%{__make} check
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
