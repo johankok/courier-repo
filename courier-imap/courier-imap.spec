@@ -31,6 +31,7 @@ BuildRequires:      openssl
 BuildRequires:      openssl-devel
 
 BuildRequires: perl-generators
+BuildRequires: glibc-all-langpacks
 
 Obsoletes: %{name}-ldap
 Obsoletes: %{name}-mysql
