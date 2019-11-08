@@ -52,7 +52,6 @@ unicode library.
 %{_includedir}/*
 %{_libdir}/*.so
 %{_libdir}/*.la
-%{_libdir}/*.a
 %{_datadir}/aclocal/*.m4
 
 %changelog
