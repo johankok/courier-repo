@@ -35,6 +35,8 @@ unicode library.
 %install
 %makeinstall
 
+rm %{buildroot}%{_libdir}/*.la
+
 %check
 %{__make} check
 
@@ -51,7 +53,6 @@ unicode library.
 %{_mandir}/*/*
 %{_includedir}/*
 %{_libdir}/*.so
-%{_libdir}/*.la
 %{_datadir}/aclocal/*.m4
 
 %changelog
