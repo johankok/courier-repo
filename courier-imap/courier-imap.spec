@@ -31,7 +31,10 @@ BuildRequires:      openssl
 BuildRequires:      openssl-devel
 
 BuildRequires: perl-generators
+
+%if 0%{?fedora} >= 30 || 0%{?rhel} >= 8
 BuildRequires: glibc-all-langpacks
+%endif
 
 Obsoletes: %{name}-ldap
 Obsoletes: %{name}-mysql
