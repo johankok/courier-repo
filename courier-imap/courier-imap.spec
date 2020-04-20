@@ -9,7 +9,7 @@
 
 Summary: Courier IMAP server
 Name: courier-imap
-Version: 5.0.8
+Version: 5.0.9
 Release: 1%{?dist}
 License: GPLv3
 Source: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
