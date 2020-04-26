@@ -10,9 +10,10 @@
 Summary: Courier IMAP server
 Name: courier-imap
 Version: 5.0.10
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv3
 Source: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
+Patch0: move_int_out_of_for_line.patch
 Requires: coreutils sed
 %if %using_systemd
 Requires(post):   systemd
@@ -59,8 +60,7 @@ other mail servers.  Do not install this package if you intend to install the
 full Courier mail server.  Install the Courier package instead.
 
 %prep
-
-%setup -q
+%autosetup -p1
 
 %if %(test '%{xflags}' = '%%{xflags}' && echo 1 || echo 0)
 %define xflags %{nil}
