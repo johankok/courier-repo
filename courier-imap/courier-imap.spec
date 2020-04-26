@@ -36,10 +36,6 @@ BuildRequires: perl-generators
 BuildRequires: glibc-all-langpacks
 %endif
 
-Obsoletes: %{name}-ldap
-Obsoletes: %{name}-mysql
-Obsoletes: %{name}-pgsql
-
 BuildRequires: rpm >= 4.0.2 sed /usr/include/fam.h
 
 #  RH 7.0 resets sysconfdir & mandir, put them back where they belong
