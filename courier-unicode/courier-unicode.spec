@@ -1,12 +1,16 @@
 Summary: Courier Unicode Library
 Name: courier-unicode
 Version: 2.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv3
 URL: http://www.courier-mta.org/unicode/
-Source: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
+Source0: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
+Source1: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2.sig
+Source2: courier-unicode.gpg
 BuildRequires: perl-generators
+BuildRequires: gcc
 BuildRequires: gcc-c++
+BuildRequires: gnupg
 
 %description
 This library implements several algorithms related to the Unicode
@@ -17,7 +21,7 @@ use this library. Install the "courier-unicode-devel" package if you want
 to develop new applications using this library.
 
 %package devel
-Summary: Courier Unicode Library development files
+Summary: Development tools for programs which will use the courier-unicode library
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
@@ -27,10 +31,11 @@ unicode library.
 
 %prep
 %setup -q
+%{gpgverify} --keyring='%{SOURCE2}' --signature='%{SOURCE1}' --data='%{SOURCE0}'
 
 %build
 %configure --disable-static
-%{__make} -s %{?_smp_mflags}
+%{__make} %{?_smp_mflags}
 
 %install
 %makeinstall
@@ -40,21 +45,24 @@ rm %{buildroot}%{_libdir}/*.la
 %check
 %{__make} check
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
-
-
 %files
-%defattr(-,root,root,-)
-%doc README COPYING ChangeLog AUTHORS
-%{_libdir}/*.so.*
+%license COPYING
+%doc README ChangeLog AUTHORS
+%{_libdir}/libcourier-unicode.so.4
+%{_libdir}/libcourier-unicode.so.4.1.0
 
 %files devel
-%{_mandir}/*/*
-%{_includedir}/*
-%{_libdir}/*.so
-%{_datadir}/aclocal/*.m4
+%{_includedir}/courier-unicode.h
+%{_includedir}/courier-unicode-categories-tab.h
+%{_includedir}/courier-unicode-script-tab.h
+%{_libdir}/libcourier-unicode.so
+%{_datadir}/aclocal/courier-unicode.m4
+%{_mandir}/man3/*
+%{_mandir}/man7/*
 
 %changelog
+* Fri May 01 2020 Johan Kok <johan@fedoraproject.org> - 2.1-2
+- Validate sources, specify files
+
 * Sun Jan 12 2014 Sam Varshavchik <mrsam@octopus.email-scan.com> - 1.0
 - Initial build.
