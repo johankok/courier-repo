@@ -12,7 +12,10 @@ Name: courier-imap
 Version: 5.0.10
 Release: 2%{?dist}
 License: GPLv3
-Source: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
+URL: http://www.courier-mta.org/imap/
+Source0: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
+Source1: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2.sig
+Source2: courier-imap.gpg
 Patch0: move_int_out_of_for_line.patch
 Requires: coreutils sed
 %if %using_systemd
@@ -22,22 +25,23 @@ Requires(preun):  systemd
 %endif
 Requires: courier-authlib >= 0.60.6.20080629
 BuildRequires: procps
-BuildRequires: coreutils perl
+BuildRequires: coreutils
 BuildRequires: courier-authlib-devel >= 0.60.6.20080629
 BuildRequires: libidn-devel
 BuildRequires: courier-unicode-devel
+BuildRequires: gamin-devel
 BuildRequires: gdbm-devel
+BuildRequires: gcc-c++
 
-BuildRequires:      openssl
-BuildRequires:      openssl-devel
+BuildRequires: openssl
+BuildRequires: openssl-devel
 
-BuildRequires: perl-generators
+BuildRequires: perl-interpreter
+BuildRequires: gnupg
 
 %if 0%{?fedora} >= 30 || 0%{?rhel} >= 8
 BuildRequires: glibc-all-langpacks
 %endif
-
-BuildRequires: rpm >= 4.0.2 sed /usr/include/fam.h
 
 #  RH 7.0 resets sysconfdir & mandir, put them back where they belong
 
@@ -54,25 +58,22 @@ BuildRequires: rpm >= 4.0.2 sed /usr/include/fam.h
 
 %description
 Courier-IMAP is an IMAP server for Maildir mailboxes.  This package contains
-the standalone version of the IMAP server that's included in the Courier
+the standalone version of the IMAP server that is included in the Courier
 mail server package.  This package is a standalone version for use with
 other mail servers.  Do not install this package if you intend to install the
-full Courier mail server.  Install the Courier package instead.
+full Courier mail server. Install the Courier package instead.
 
 %prep
 %autosetup -p1
-
-%if %(test '%{xflags}' = '%%{xflags}' && echo 1 || echo 0)
-%define xflags %{nil}
+%if 0%{?fedora} >= 30 || 0%{?rhel} >= 7
+%{gpgverify} --keyring='%{SOURCE2}' --signature='%{SOURCE1}' --data='%{SOURCE0}'
 %endif
 
-PATH=/usr/bin:$PATH %configure \
-  --with-redhat \
-  --with-notice=unicode \
-  %{?xflags: %{xflags}}
-
 %build
+%configure --with-notice=unicode
 %{__make} %{_smp_mflags}
+
+%check
 %{__make} check
 
 %install

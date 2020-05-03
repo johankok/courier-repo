@@ -31,7 +31,9 @@ unicode library.
 
 %prep
 %setup -q
+%if 0%{?fedora} >= 30 || 0%{?rhel} >= 7
 %{gpgverify} --keyring='%{SOURCE2}' --signature='%{SOURCE1}' --data='%{SOURCE0}'
+%endif
 
 %build
 %configure --disable-static

@@ -4,34 +4,33 @@
 
 %define using_systemd %(test -d /etc/systemd && echo 1 || echo 0)
 
-################################################################################
+Name: courier-authlib
+Version: 0.70.0
+Release: 1%{?dist}
+Summary: Courier authentication library
 
-Name:           courier-authlib
-Version:        0.70.0
-Release:        1%{?dist}
-Summary:        Courier authentication library
+License: GPLv3
+URL: http://www.courier-mta.org/authlib/
 
-License:        GPLv3
-URL:            http://www.courier-mta.org
+Source0: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
+Source1: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2.sig
+Source2: courier-authlib.gpg
 
-################################################################################
+BuildRequires: libtool
+BuildRequires: openldap-devel
+BuildRequires: mysql-devel
+BuildRequires: zlib-devel
+BuildRequires: sqlite-devel
+BuildRequires: postgresql-devel
+BuildRequires: gdbm-devel
+BuildRequires: pam-devel
+BuildRequires: expect
+BuildRequires: gcc-c++
+BuildRequires: courier-unicode-devel
+BuildRequires: procps
+BuildRequires: gnupg
 
-Source:         https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
-
-################################################################################
-
-BuildRequires:      libtool
-BuildRequires:      openldap-devel
-BuildRequires:      mysql-devel zlib-devel sqlite-devel
-BuildRequires:      postgresql-devel
-BuildRequires:      gdbm-devel
-BuildRequires:      pam-devel
-BuildRequires:      expect
-BuildRequires:      gcc-c++
-BuildRequires:      courier-unicode-devel
-BuildRequires:      procps
-
-BuildRequires:      %{_includedir}/ltdl.h
+BuildRequires: libtool-ltdl-devel
 
 %if %using_systemd
 Requires(post):     systemd
@@ -42,15 +41,11 @@ Requires(post):     /sbin/chkconfig
 Requires(preun):    /sbin/chkconfig
 %endif
 
-BuildRequires: perl-generators
-
-################################################################################
+BuildRequires: perl-interpreter
 
 %description
 The Courier authentication library provides authentication services for
 other Courier applications.
-
-################################################################################
 
 %package devel
 Summary:  Development libraries for the Courier authentication library
@@ -63,8 +58,6 @@ package in order to build the rest of the Courier packages.  After they are
 built and installed this package can be removed.  Files in this package
 are not needed at runtime.
 
-################################################################################
-
 %package userdb
 
 Summary:  Userdb support for the Courier authentication library
@@ -76,8 +69,6 @@ library.  Userdb is a simple way to manage virtual mail accounts using
 a GDBM-based database file.
 Install this package in order to be able to authenticate with userdb.
 
-################################################################################
-
 %package ldap
 
 Summary:  LDAP support for the Courier authentication library
@@ -86,8 +77,6 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 %description ldap
 This package installs LDAP support for the Courier authentication library.
 Install this package in order to be able to authenticate using LDAP.
-
-################################################################################
 
 %package mysql
 
@@ -108,8 +97,6 @@ This package installs SQLite support for the Courier authentication library.
 Install this package in order to be able to authenticate using an SQLite-based
 database file.
 
-################################################################################
-
 %package pgsql
 
 Summary:  PostgreSQL support for the Courier authentication library
@@ -119,8 +106,6 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 This package installs PostgreSQL support for the Courier authentication
 library.
 Install this package in order to be able to authenticate using PostgreSQL.
-
-################################################################################
 
 %package pipe
 
@@ -132,14 +117,15 @@ This package installs the authpipe module, which is a generic plugin
 that enables authentication requests to be serviced by an external
 program, then communicates through messages on stdin and stdout.
 
-################################################################################
-
 %prep
 %setup -q
-PATH=/usr/bin:$PATH %configure -C --with-redhat
+%if 0%{?fedora} >= 30 || 0%{?rhel} >= 7
+%{gpgverify} --keyring='%{SOURCE2}' --signature='%{SOURCE1}' --data='%{SOURCE0}'
+%endif
 
 %build
-%{__make} -s %{_smp_mflags}
+%configure
+%{__make} %{_smp_mflags}
 
 %install
 MAKEFLAGS= %{__make} -j 1 install DESTDIR=$RPM_BUILD_ROOT

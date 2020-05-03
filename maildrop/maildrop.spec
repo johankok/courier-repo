@@ -7,22 +7,21 @@ Name: maildrop
 Version: 3.0.0
 Release: 1%{?dist}
 License: GPLv3
-Source: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
 Url: http://www.courier-mta.org/maildrop/
 
-BuildRequires: /usr/include/fam.h gdbm-devel pcre-devel
+Source0: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
+Source1: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2.sig
+Source2: maildrop.gpg
+
+BuildRequires: gamin-devel
+BuildRequires: gdbm-devel
+BuildRequires: pcre-devel
 BuildRequires: libidn-devel
 BuildRequires: courier-unicode-devel
 BuildRequires: gcc-c++
-
-%package devel
-Summary: development tools for handling E-mail messages
-
-%package man
-Summary: manual pages for maildrop
+BuildRequires: gnupg
 
 %description
-
 Maildrop is a combination mail filter/mail delivery agent.
 Maildrop reads the message to be delivered to your mailbox,
 optionally reads instructions from a file how filter incoming
@@ -44,6 +43,10 @@ http://lists.sourceforge.net/lists/listinfo/courier-maildrop
 This version is compiled with support for GDBM database files,
 maildir enhancements (folders+quotas), and userdb.
 
+%package devel
+Summary: development tools for handling E-mail messages
+Requires: %{name}%{?_isa} = %{version}-%{release}
+
 %description devel
 The maildrop-devel package contains the libraries and header files
 that can be useful in developing software that works with or processes
@@ -52,20 +55,17 @@ E-mail messages.
 Install the maildrop-devel package if you want to develop applications
 which use or process E-mail messages.
 
-%description man
-This package contains manual pages for maildrop and associated
-utilities.
 %prep
-
 %setup -q
-%configure --with-devel --enable-userdb --enable-maildirquota --enable-syslog=1 --enable-trusted-users='root mail daemon postmaster qmaild mmdf' --enable-restrict-trusted=0 --enable-sendmail=/usr/sbin/sendmail
+%if 0%{?fedora} >= 30 || 0%{?rhel} >= 7
+%{gpgverify} --keyring='%{SOURCE2}' --signature='%{SOURCE1}' --data='%{SOURCE0}'
+%endif
 
 %build
-
+%configure --with-devel --enable-userdb --enable-maildirquota --enable-syslog=1 --enable-trusted-users='root mail daemon postmaster qmaild mmdf' --enable-restrict-trusted=0 --enable-sendmail=/usr/sbin/sendmail
 %{__make} %{_smp_mflags}
-%install
 
-mkdir -p $RPM_BUILD_ROOT
+%install
 %{__make} install DESTDIR=$RPM_BUILD_ROOT MAILDROPUID='' MAILDROPGID=''
 
 mkdir htmldoc
@@ -87,6 +87,7 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}/*/html
 %{_bindir}/reformime
 %{_bindir}/makedat
 %{_bindir}/makedatprog
+%{_mandir}/man[1578]/*
 
 %doc libs/maildir/README.maildirquota.html libs/maildir/README.maildirquota.txt
 %doc COPYING README README.postfix INSTALL NEWS UPGRADE ChangeLog maildroptips.txt
@@ -96,9 +97,5 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}/*/html
 %{_mandir}/man3/*
 %{_includedir}/*
 %{_libdir}/lib*
-
-%files man
-%defattr(-, bin, bin)
-%{_mandir}/man[1578]/*
 
 %changelog
