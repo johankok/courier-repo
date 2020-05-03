@@ -1,7 +1,3 @@
-#
-# Copyright 1998 - 2017 Double Precision, Inc.  See COPYING for
-# distribution information.
-
 %define using_systemd %(test -d /etc/systemd && echo 1 || echo 0)
 
 Name: courier-authlib
@@ -59,7 +55,6 @@ built and installed this package can be removed.  Files in this package
 are not needed at runtime.
 
 %package userdb
-
 Summary:  Userdb support for the Courier authentication library
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
@@ -70,7 +65,6 @@ a GDBM-based database file.
 Install this package in order to be able to authenticate with userdb.
 
 %package ldap
-
 Summary:  LDAP support for the Courier authentication library
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
@@ -79,7 +73,6 @@ This package installs LDAP support for the Courier authentication library.
 Install this package in order to be able to authenticate using LDAP.
 
 %package mysql
-
 Summary:  MySQL support for the Courier authentication library
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
@@ -88,7 +81,6 @@ This package installs MySQL support for the Courier authentication library.
 Install this package in order to be able to authenticate using MySQL.
 
 %package sqlite
-
 Summary:  SQLite support for the Courier authentication library
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
@@ -98,7 +90,6 @@ Install this package in order to be able to authenticate using an SQLite-based
 database file.
 
 %package pgsql
-
 Summary:  PostgreSQL support for the Courier authentication library
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
@@ -108,7 +99,6 @@ library.
 Install this package in order to be able to authenticate using PostgreSQL.
 
 %package pipe
-
 Summary:  External authentication module that communicates via pipes
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
@@ -126,6 +116,9 @@ program, then communicates through messages on stdin and stdout.
 %build
 %configure
 %{__make} %{_smp_mflags}
+
+%check
+%{__make} check
 
 %install
 MAKEFLAGS= %{__make} -j 1 install DESTDIR=$RPM_BUILD_ROOT
