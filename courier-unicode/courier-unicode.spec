@@ -7,7 +7,7 @@ URL: http://www.courier-mta.org/unicode/
 Source0: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
 Source1: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2.sig
 Source2: courier-unicode.gpg
-BuildRequires: perl-generators
+BuildRequires: perl-interpreter
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: gnupg
