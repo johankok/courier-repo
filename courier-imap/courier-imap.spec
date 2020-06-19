@@ -9,14 +9,13 @@
 
 Summary: Courier IMAP server
 Name: courier-imap
-Version: 5.0.10
+Version: 5.0.11
 Release: 2%{?dist}
 License: GPLv3
 URL: http://www.courier-mta.org/imap/
 Source0: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
 Source1: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2.sig
 Source2: courier-imap.gpg
-Patch0: move_int_out_of_for_line.patch
 Requires: coreutils sed
 %if %using_systemd
 Requires(post):   systemd
@@ -64,10 +63,8 @@ other mail servers.  Do not install this package if you intend to install the
 full Courier mail server. Install the Courier package instead.
 
 %prep
-%autosetup -p1
-%if 0%{?fedora} >= 30 || 0%{?rhel} >= 7
+%autosetup
 %{gpgverify} --keyring='%{SOURCE2}' --signature='%{SOURCE1}' --data='%{SOURCE0}'
-%endif
 
 %build
 %configure --with-notice=unicode
