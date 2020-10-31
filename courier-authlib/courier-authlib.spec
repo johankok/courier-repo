@@ -1,7 +1,7 @@
 %define using_systemd %(test -d /etc/systemd && echo 1 || echo 0)
 
 Name: courier-authlib
-Version: 0.70.0
+Version: 0.71.0
 Release: 1%{?dist}
 Summary: Courier authentication library
 
