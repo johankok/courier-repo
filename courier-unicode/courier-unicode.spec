@@ -1,7 +1,7 @@
 Summary: Courier Unicode Library
 Name: courier-unicode
-Version: 2.1
-Release: 2%{?dist}
+Version: 2.1.1
+Release: 1%{?dist}
 License: GPLv3
 URL: http://www.courier-mta.org/unicode/
 Source0: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
@@ -63,6 +63,9 @@ rm %{buildroot}%{_libdir}/*.la
 %{_mandir}/man7/*
 
 %changelog
+* Wed Nov 25 2020 Johan Kok <johan@fedoraproject.org> - 2.1.1-1
+- Bumped to version 2.1.1
+
 * Fri May 01 2020 Johan Kok <johan@fedoraproject.org> - 2.1-2
 - Validate sources, specify files
 
