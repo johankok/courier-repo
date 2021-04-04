@@ -1,7 +1,5 @@
-%define using_systemd %(test -d /etc/systemd && echo 1 || echo 0)
-
 Name: courier-authlib
-Version: 0.71.0
+Version: 0.71.2
 Release: 1%{?dist}
 Summary: Courier authentication library
 
@@ -25,19 +23,14 @@ BuildRequires: gcc-c++
 BuildRequires: courier-unicode-devel
 BuildRequires: procps
 BuildRequires: gnupg
+BuildRequires: make
+BuildRequires: perl-interpreter
 
 BuildRequires: libtool-ltdl-devel
 
-%if %using_systemd
 Requires(post):     systemd
 Requires(preun):    systemd
 Requires(postun):    systemd
-%else
-Requires(post):     /sbin/chkconfig
-Requires(preun):    /sbin/chkconfig
-%endif
-
-BuildRequires: perl-interpreter
 
 %description
 The Courier authentication library provides authentication services for
@@ -109,9 +102,7 @@ program, then communicates through messages on stdin and stdout.
 
 %prep
 %setup -q
-%if 0%{?fedora} >= 30 || 0%{?rhel} >= 7
 %{gpgverify} --keyring='%{SOURCE2}' --signature='%{SOURCE1}' --data='%{SOURCE0}'
-%endif
 
 %build
 %configure
@@ -187,6 +178,19 @@ do
 	esac
 
 	case "$fn" in
+		*.so)
+			case "$fn" in
+			libcourierauth*)
+				;;
+			*)
+				rm -f "$f"
+				continue
+				;;
+			esac
+			;;
+		esac
+
+	case "$fn" in
 	libauthpipe*)
 		echo "%{_libdir}/courier-authlib/$fn" >>configfiles.pipe
 		;;
@@ -208,26 +212,22 @@ do
 	libauthuserdb*)
 		echo "%{_libdir}/courier-authlib/$fn" >>configfiles.userdb
 		;;
+	*.so)
+		echo "%{_libdir}/courier-authlib/$fn" >>configfiles.devel
+		;;
 	*)
 		echo "%{_libdir}/courier-authlib/$fn" >>configfiles.base
 		;;
 	esac
 done
-%if %using_systemd
 %{__mkdir_p} $RPM_BUILD_ROOT%{_datadir}
 %{__install} -m 555 courier-authlib.sysvinit $RPM_BUILD_ROOT%{_datadir}
 
 %{__mkdir_p} $RPM_BUILD_ROOT/lib/systemd/system
 %{__install} -m 644 courier-authlib.service $RPM_BUILD_ROOT/lib/systemd/system
-%else
-%{__mkdir_p} $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d
-%{__install} -m 555 courier-authlib.sysvinit \
-        $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/courier-authlib
-%endif
 
 %post
 %{_libexecdir}/courier-authlib/sysconftool %{_sysconfdir}/authlib/*.dist >/dev/null
-%if %using_systemd
 if test -f /etc/init.d/courier-authlib
 then
 # Upgrade to systemd
@@ -240,40 +240,26 @@ if [ $1 -eq 1 ]
 then
     /bin/systemctl daemon-reload >/dev/null 2>&1 || :
 fi
-%else
-/sbin/chkconfig --del courier-authlib
-/sbin/chkconfig --add courier-authlib
-%endif
+
 %preun
 if test "$1" = "0"
 then
-%if %using_systemd
 %systemd_preun courier-authlib.service
-%else
-        /sbin/chkconfig --del courier-authlib
-%endif
 fi
 
 %postun
-%if %using_systemd
 if [ $1 -eq 0 ]
 then
     /bin/systemctl daemon-reload
 fi
 %systemd_postun_with_restart courier-authlib.service
-%endif
-
 
 %files -f configfiles.base
 %defattr(-,root,root,-)
 %doc README README*html README.authmysql.myownquery README.ldap
 %doc NEWS COPYING* AUTHORS ChangeLog
-%if %using_systemd
 /lib/systemd/system/*
 %attr(755, bin, bin) %{_datadir}/courier-authlib.sysvinit
-%else
-/etc/rc.d/init.d/*
-%endif
 %ghost %attr(600, root, root) %{_localstatedir}/spool/authdaemon/pid.lock
 %ghost %attr(644, root, root) %{_localstatedir}/spool/authdaemon/pid
 %ghost %attr(-, root, root) %{_localstatedir}/spool/authdaemon/socket
@@ -303,6 +289,9 @@ fi
 %files -f configfiles.pipe pipe
 
 %changelog
+* Sun Apr 04 2021 Johan Kok <johan@fedoraproject.org> - 0.71.2-1
+- Bumped to version 0.71.2
+- Added make to BuildRequires
 
 * Thu Sep  7 2006 Chris Petersen <rpm@forevermore.net>                  0.58-2
 - Make the spec a little prettier
