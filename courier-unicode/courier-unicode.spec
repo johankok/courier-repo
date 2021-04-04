@@ -1,6 +1,6 @@
 Summary: Courier Unicode Library
 Name: courier-unicode
-Version: 2.1.1
+Version: 2.2.3
 Release: 1%{?dist}
 License: GPLv3
 URL: http://www.courier-mta.org/unicode/
@@ -11,6 +11,7 @@ BuildRequires: perl-interpreter
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: gnupg
+BuildRequires: make
 
 %description
 This library implements several algorithms related to the Unicode
@@ -31,9 +32,7 @@ unicode library.
 
 %prep
 %setup -q
-%if 0%{?fedora} >= 30 || 0%{?rhel} >= 7
 %{gpgverify} --keyring='%{SOURCE2}' --signature='%{SOURCE1}' --data='%{SOURCE0}'
-%endif
 
 %build
 %configure --disable-static
@@ -50,8 +49,8 @@ rm %{buildroot}%{_libdir}/*.la
 %files
 %license COPYING
 %doc README ChangeLog AUTHORS
-%{_libdir}/libcourier-unicode.so.4
-%{_libdir}/libcourier-unicode.so.4.1.0
+%{_libdir}/libcourier-unicode.so.7
+%{_libdir}/libcourier-unicode.so.7.0.0
 
 %files devel
 %{_includedir}/courier-unicode.h
@@ -59,10 +58,15 @@ rm %{buildroot}%{_libdir}/*.la
 %{_includedir}/courier-unicode-script-tab.h
 %{_libdir}/libcourier-unicode.so
 %{_datadir}/aclocal/courier-unicode.m4
+%{_datadir}/aclocal/courier-unicode-version.m4
 %{_mandir}/man3/*
 %{_mandir}/man7/*
 
 %changelog
+* Sun Apr 04 2021 Johan Kok <johan@fedoraproject.org> - 2.2.3-1
+- Bumped to version 2.2.3
+- Added make to BuildRequires
+
 * Wed Nov 25 2020 Johan Kok <johan@fedoraproject.org> - 2.1.1-1
 - Bumped to version 2.1.1
 
