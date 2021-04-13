@@ -1,5 +1,5 @@
 Name: courier-authlib
-Version: 0.71.2
+Version: 0.71.3
 Release: 1%{?dist}
 Summary: Courier authentication library
 
@@ -24,7 +24,7 @@ BuildRequires: courier-unicode-devel
 BuildRequires: procps
 BuildRequires: gnupg
 BuildRequires: make
-BuildRequires: perl-interpreter
+BuildRequires: perl-generators
 
 BuildRequires: libtool-ltdl-devel
 
@@ -257,7 +257,8 @@ fi
 %files -f configfiles.base
 %defattr(-,root,root,-)
 %doc README README*html README.authmysql.myownquery README.ldap
-%doc NEWS COPYING* AUTHORS ChangeLog
+%doc NEWS AUTHORS ChangeLog
+%license COPYING COPYING.GPL
 /lib/systemd/system/*
 %attr(755, bin, bin) %{_datadir}/courier-authlib.sysvinit
 %ghost %attr(600, root, root) %{_localstatedir}/spool/authdaemon/pid.lock
@@ -289,6 +290,10 @@ fi
 %files -f configfiles.pipe pipe
 
 %changelog
+* Tue Apr 13 2021 Johan Kok <johan@fedoraproject.org> - 0.71.3-1
+- Bumped to version 0.71.3
+- Use perl-generators for sysconftool perl dependencies
+
 * Sun Apr 04 2021 Johan Kok <johan@fedoraproject.org> - 0.71.2-1
 - Bumped to version 0.71.2
 - Added make to BuildRequires
