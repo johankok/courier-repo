@@ -1,6 +1,6 @@
 Summary: Courier IMAP server
 Name: courier-imap
-Version: 5.1.2
+Version: 5.1.3
 Release: 1%{?dist}
 License: GPLv3
 URL: http://www.courier-mta.org/imap/
@@ -276,6 +276,9 @@ fi
 %ghost %attr(600, root, root) %{_localstatedir}/pop3d-ssl.pid.lock
 
 %changelog
+* Mon Apr 26 2021 Johan Kok <johan@fedoraproject.org> - 5.1.3-1
+- Bumped to version 5.1.3
+
 * Sun Apr 04 2021 Johan Kok <johan@fedoraproject.org> - 5.1.2-1
 - Bumped to version 5.1.2
 - Added make to BuildRequires
