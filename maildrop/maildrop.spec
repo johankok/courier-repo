@@ -13,13 +13,13 @@ Source0: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2
 Source1: https://downloads.sourceforge.net/courier/%{name}-%{version}.tar.bz2.sig
 Source2: maildrop.gpg
 
-BuildRequires: gamin-devel
 BuildRequires: gdbm-devel
 BuildRequires: pcre-devel
 BuildRequires: libidn-devel
 BuildRequires: courier-unicode-devel
 BuildRequires: gcc-c++
 BuildRequires: gnupg
+BuildRequires: make
 
 %description
 Maildrop is a combination mail filter/mail delivery agent.
@@ -57,9 +57,7 @@ which use or process E-mail messages.
 
 %prep
 %setup -q
-%if 0%{?fedora} >= 30 || 0%{?rhel} >= 7
 %{gpgverify} --keyring='%{SOURCE2}' --signature='%{SOURCE1}' --data='%{SOURCE0}'
-%endif
 
 %build
 %configure --with-devel --enable-userdb --enable-maildirquota --enable-syslog=1 --enable-trusted-users='root mail daemon postmaster qmaild mmdf' --enable-restrict-trusted=0 --enable-sendmail=/usr/sbin/sendmail
@@ -88,6 +86,8 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}/*/html
 %{_bindir}/makedat
 %{_bindir}/makedatprog
 %{_mandir}/man[1578]/*
+%{_bindir}/maildirwatch
+%{_bindir}/maildirkw
 
 %doc libs/maildir/README.maildirquota.html libs/maildir/README.maildirquota.txt
 %doc COPYING README README.postfix INSTALL NEWS UPGRADE ChangeLog maildroptips.txt
